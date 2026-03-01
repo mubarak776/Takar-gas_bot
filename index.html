@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>টাকার গাছ - টাকার ব্যাগ</title>
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <script src='//libtl.com/sdk.js' data-zone='10669351' data-sdk='show_10669351'></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #f0fdf4; user-select: none; -webkit-tap-highlight-color: transparent; }
+        .page { display: none; }
+        .page.active { display: block; }
+        .tree-gradient { background: linear-gradient(135deg, #16a34a 0%, #065f46 100%); }
+        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-top: 1px solid rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body class="pb-24">
+
+    <header class="bg-white p-4 shadow-md flex justify-between items-center sticky top-0 z-50 rounded-b-3xl">
+        <div class="flex items-center gap-3">
+            <img src="https://raw.githubusercontent.com/mubarak776/Takar-gas/main/1000000506.png" class="w-10 h-10 object-contain" alt="Logo">
+            <div>
+                <h1 class="text-lg font-black text-green-700 leading-tight">টাকার গাছ</h1>
+                <p id="user-display-name" class="text-[10px] font-bold text-gray-500 italic">ইউজার ডিটেক্ট হচ্ছে...</p>
+            </div>
+        </div>
+        <div class="flex flex-col items-end">
+            <span class="text-[8px] bg-green-500 text-white px-2 py-0.5 rounded-full font-bold animate-pulse">LIVE</span>
+        </div>
+    </header>
+
+    <div id="home" class="page active p-4 space-y-5">
+        
+        <div class="tree-gradient rounded-3xl p-6 text-white shadow-2xl relative overflow-hidden">
+            <div class="relative z-10">
+                <p class="text-xs opacity-80 font-bold uppercase tracking-widest">মোট জমানো টাকা</p>
+                <h2 class="text-5xl font-black mt-1 tracking-tight">৳<span id="main-balance">0.00</span></h2>
+                <p class="text-[9px] mt-4 opacity-70 font-mono">TG-ID: <span id="tg-user-id">00000000</span></p>
+            </div>
+            <i class="fas fa-tree absolute -right-6 -bottom-6 text-9xl opacity-10"></i>
+        </div>
+
+        <div id="verify-box" class="bg-white rounded-3xl p-5 border-2 border-orange-200 shadow-sm">
+            <h3 class="text-red-600 font-bold text-center mb-4 text-xs tracking-tighter">আগে ইউটিউব ও টেলিগ্রাম সাবস্ক্রাইব করুন!</h3>
+            <div class="space-y-3">
+                <a href="Https://www.youtube.com/@Online_Free_Income_96" target="_blank" onclick="verify('yt')" class="flex items-center justify-between p-4 bg-red-50 rounded-2xl border border-red-100 active:scale-95 transition-transform">
+                    <span class="text-xs font-bold text-red-700"><i class="fab fa-youtube mr-2 text-lg"></i> ইউটিউব সাবস্ক্রাইব</span>
+                    <span id="yt-tag" class="text-[9px] bg-red-600 text-white px-3 py-1 rounded-full font-bold">বাকি</span>
+                </a>
+                <a href="https://t.me/Online_Free_Income_96" target="_blank" onclick="verify('tg')" class="flex items-center justify-between p-4 bg-blue-50 rounded-2xl border border-blue-100 active:scale-95 transition-transform">
+                    <span class="text-xs font-bold text-blue-700"><i class="fab fa-telegram mr-2 text-lg"></i> টেলিগ্রাম চ্যানেল</span>
+                    <span id="tg-tag" class="text-[9px] bg-blue-600 text-white px-3 py-1 rounded-full font-bold">বাকি</span>
+                </a>
+            </div>
+        </div>
+
+        <div id="task-card" class="bg-white rounded-3xl p-8 shadow-inner border text-center opacity-30 pointer-events-none transition-all duration-500">
+            <div class="mb-4">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2 text-red-500 text-2xl">
+                    <i class="fas fa-play"></i>
+                </div>
+                <h4 class="font-black text-gray-700">ভিডিও বিজ্ঞাপন টাস্ক</h4>
+                <p class="text-[10px] text-gray-400">প্রতি বিজ্ঞাপনে পাবেন ৳২৫.০০</p>
+            </div>
+            <button onclick="playMonetagAd()" class="w-full bg-green-600 hover:bg-green-700 text-white font-black py-5 rounded-2xl shadow-xl active:scale-95">
+                বিজ্ঞাপন দেখুন
+            </button>
+            <p id="lock-msg" class="text-[9px] text-red-500 mt-3 font-bold">⚠️ সাবস্ক্রাইব না করলে বাটন কাজ করবে না</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl shadow-sm text-center border">
+            <p class="text-[11px] font-bold text-gray-500 mb-3 uppercase tracking-wider">যেকোনো সমস্যায় এডমিনকে ইনবক্স করুন</p>
+            <a href="https://t.me/Mubarak_784" class="inline-flex items-center bg-blue-600 text-white px-10 py-3 rounded-full font-black shadow-lg active:bg-blue-800 transition-colors">
+                <i class="fab fa-telegram-plane mr-2 text-lg"></i> @Mubarak_784
+            </a>
+        </div>
+    </div>
+
+    <div id="wallet" class="page p-4">
+        <h2 class="text-2xl font-black text-green-800 mb-6 italic text-center underline decoration-green-300">Wallet</h2>
+        <div class="bg-white p-7 rounded-3xl shadow-2xl border-t-8 border-green-600 space-y-5">
+            <div class="bg-green-50 p-4 rounded-2xl border border-green-100 text-center">
+                <p class="text-xs font-bold text-green-700 italic">মিনিমাম উইথড্র ৳৫০০.০০</p>
+            </div>
+            <input type="number" id="pay-number" placeholder="বিকাশ/নগদ নম্বর দিন" class="w-full p-4 bg-gray-50 border rounded-2xl outline-none focus:ring-2 ring-green-400 font-bold">
+            <input type="number" id="pay-amt" placeholder="পরিমাণ লিখুন" class="w-full p-4 bg-gray-50 border rounded-2xl outline-none focus:ring-2 ring-green-400 font-bold">
+            <button onclick="requestWithdraw()" class="w-full bg-green-600 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95">টাকা উত্তোলনের আবেদন</button>
+        </div>
+    </div>
+
+    <nav class="fixed bottom-0 left-0 right-0 glass-nav flex justify-around items-center py-4 z-50 rounded-t-[2.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+        <button onclick="changeTab('home')" id="tab-home" class="flex flex-col items-center text-green-600 transition-all">
+            <i class="fas fa-home text-xl"></i><span class="text-[10px] font-bold mt-1">হোম</span>
+        </button>
+        <button onclick="changeTab('wallet')" id="tab-wallet" class="flex flex-col items-center text-gray-400 transition-all">
+            <i class="fas fa-wallet text-xl"></i><span class="text-[10px] font-bold mt-1">ওয়ালেট</span>
+        </button>
+        <a href="https://t.me/Online_Free_Income_96" class="flex flex-col items-center text-gray-400">
+            <i class="fas fa-bullhorn text-xl"></i><span class="text-[10px] font-bold mt-1">চ্যানেল</span>
+        </a>
+    </nav>
+
+    <script>
+        // --- Telegram Data Setup ---
+        const tgApp = window.Telegram.WebApp;
+        tgApp.expand();
+        const userData = tgApp.initDataUnsafe?.user;
+        if(userData) {
+            document.getElementById('user-display-name').innerText = userData.first_name + " " + (userData.last_name || "");
+            document.getElementById('tg-user-id').innerText = userData.id;
+        }
+
+        // --- Core Application Logic ---
+        let currentBal = parseFloat(localStorage.getItem('gas_balance')) || 0;
+        let ytDone = localStorage.getItem('v_yt_tree') === 'true';
+        let tgDone = localStorage.getItem('v_tg_tree') === 'true';
+
+        updateDisplay();
+
+        function verify(type) {
+            // সিমুলেটেড ভেরিফিকেশন টাইমার
+            setTimeout(() => {
+                if(type === 'yt') { ytDone = true; localStorage.setItem('v_yt_tree', 'true'); }
+                if(type === 'tg') { tgDone = true; localStorage.setItem('v_tg_tree', 'true'); }
+                updateDisplay();
+            }, 3000);
+        }
+
+        function updateDisplay() {
+            document.getElementById('main-balance').innerText = currentBal.toFixed(2);
+            
+            if(ytDone) {
+                document.getElementById('yt-tag').innerText = "ডান";
+                document.getElementById('yt-tag').className = "text-[9px] bg-green-500 text-white px-3 py-1 rounded-full font-bold";
+            }
+            if(tgDone) {
+                document.getElementById('tg-tag').innerText = "ডান";
+                document.getElementById('tg-tag').className = "text-[9px] bg-green-500 text-white px-3 py-1 rounded-full font-bold";
+            }
+
+            if(ytDone && tgDone) {
+                document.getElementById('task-card').classList.remove('opacity-30', 'pointer-events-none');
+                document.getElementById('lock-msg').classList.add('hidden');
+                document.getElementById('verify-box').style.display = 'none';
+            }
+        }
+
+        // --- Monetag Ad Call ---
+        function playMonetagAd() {
+            if (typeof show_10669351 === 'function') {
+                show_10669351().then(() => {
+                    currentBal += 25.00;
+                    localStorage.setItem('gas_balance', currentBal);
+                    updateDisplay();
+                    tgApp.HapticFeedback.notificationOccurred('success'); // ভাইব্রেশন (Telegram)
+                    alert("সফল! আপনার 'টাকার গাছ'-এ ২৫ টাকা যোগ করা হয়েছে।");
+                }).catch(err => {
+                    alert("বিজ্ঞাপন লোড হয়নি, আবার চেষ্টা করুন।");
+                });
+            } else {
+                alert("বিজ্ঞাপন সিস্টেম কানেক্ট হচ্ছে, ৫ সেকেন্ড অপেক্ষা করুন।");
+            }
+        }
+
+        function changeTab(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            
+            document.querySelectorAll('nav button').forEach(b => b.classList.replace('text-green-600', 'text-gray-400'));
+            document.getElementById('tab-' + id).classList.replace('text-gray-400', 'text-green-600');
+        }
+
+        function requestWithdraw() {
+            const num = document.getElementById('pay-number').value;
+            const amt = document.getElementById('pay-amt').value;
+            if(currentBal < 500) alert("ব্যালেন্স ৫০০ টাকার কম!");
+            else if(amt < 500 || amt > currentBal) alert("সঠিক পরিমাণ লিখুন!");
+            else {
+                alert("আপনার আবেদন সফলভাবে জমা হয়েছে! এডমিন @Mubarak_784 আপনাকে পেমেন্ট পাঠাবে।");
+            }
+        }
+    </script>
+</body>
+      </html>
+          
